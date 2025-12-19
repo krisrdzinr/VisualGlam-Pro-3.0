@@ -37,32 +37,32 @@ export const transformImagePerspective = async (
     : `Adjust the composition to fit a ${aspectRatio} aspect ratio perfectly.`;
 
   const faceConsistencyInstruction = faceConsistency 
-    ? "IDENTITY PRESERVATION: The subject's face must remain exactly as it is in the FIRST image provided. Do not modify facial features, skin texture, or unique identifiers."
-    : "";
+    ? "IDENTITY SOURCE (IMAGE 1): The face, facial features, and core character identity must be taken strictly from the FIRST image. Do not alter the subject's unique look."
+    : "Maintain the subject's general identity from the FIRST image.";
 
   let poseAttireInstruction = "";
   if (referencePoseImage) {
     poseAttireInstruction = `
-      POSE & ATTIRE TRANSFER: 
-      - Use the SECOND image provided as the strict source for POSE and ATTIRE.
-      - The subject from the FIRST image (the face/identity) must be placed into the EXACT pose and wearing the EXACT clothing (style, color, fabric) shown in the SECOND image.
-      - Blend the identity of image 1 seamlessly onto the body and outfit of image 2.
+      POSE & ATTIRE SOURCE (IMAGE 2): 
+      - The SECOND image is the strict reference for body posture, pose, and all clothing elements.
+      - ACTION: Take the face from IMAGE 1 and place it onto the body and attire of IMAGE 2.
+      - Do not keep the clothing from IMAGE 1; use ONLY the clothing and pose from IMAGE 2.
     `;
   } else {
     poseAttireInstruction = poseAttireConsistency
-      ? "POSE & ATTIRE SYNC: You must keep the exact pose, body posture, and all clothing elements from the original photo. Only re-render the camera angle and lighting around the subject."
-      : "The model is allowed to slightly adjust the pose to better suit the new camera angle while keeping the general character appearance.";
+      ? "POSE & ATTIRE SYNC: Maintain the exact pose and clothing from the input photo while adjusting the camera angle."
+      : "The model is allowed to slightly adjust the pose to suit the new camera perspective.";
   }
 
   const highResInstruction = highRes
-    ? `ULTRA ENHANCEMENT: Perform a master upscale to 8K UHD quality across the entire result. Enhance every texture, including skin, hair, and clothing, to a photorealistic standard. Remove noise and blur. The final render must look like a high-end RAW cinematic frame with volumetric lighting, crisp edges, and HDR-level depth and clarity.`
+    ? "ULTRA ENHANCEMENT: Render with professional cinema-grade detail. Sharpen textures, enhance lighting depth, and ensure a crisp 8K-style photorealistic finish."
     : "";
 
-  const prompt = `You are a world-class digital cinematographer. Re-imagine the attached subject(s) based on these professional studio settings:
+  const prompt = `You are an expert digital cinematographer performing a specialized identity and pose blend.
 
-CORE PERSPECTIVE:
-- Camera Angle: "${angleName}" - ${angleDescription || 'Adjust the 3D perspective to match this angle.'}
-- Lighting & Atmosphere: "${lightingName}" - ${lightingDescription || 'Apply this lighting to the whole scene.'}
+STUDIO SETTINGS:
+- Target Camera Angle: "${angleName}" - ${angleDescription}
+- Environment Lighting: "${lightingName}" - ${lightingDescription}
 ${customPrompt ? `- Creative Directives: "${customPrompt}"` : ''}
 
 TECHNICAL REQUIREMENTS:
@@ -70,8 +70,8 @@ TECHNICAL REQUIREMENTS:
 - ${faceConsistencyInstruction}
 - ${poseAttireInstruction}
 - ${highResInstruction}
-- Maintain the subject's core character identity from image 1.
-- Return the transformed image as the primary output.`;
+- Blend the identity and the reference pose/attire into a single, cohesive, hyper-realistic masterpiece.
+- Return the resulting composite image.`;
 
   const parts: any[] = [
     {
@@ -118,7 +118,7 @@ TECHNICAL REQUIREMENTS:
     }
 
     if (!transformedUrl) {
-      throw new Error("Transformation failed: No image data returned by the model.");
+      throw new Error("Render failed: The model did not return image data.");
     }
 
     return transformedUrl;

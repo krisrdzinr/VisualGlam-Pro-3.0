@@ -175,7 +175,10 @@ const App: React.FC = () => {
   };
 
   const handleTransform = async () => {
-    if (!imageState.original) return;
+    if (!imageState.original) {
+      setImageState(prev => ({ ...prev, error: "Please upload a Target Identity image first." }));
+      return;
+    }
 
     setImageState(prev => ({ ...prev, loading: true, error: null, transformed: null }));
 
@@ -331,7 +334,7 @@ const App: React.FC = () => {
                   <div className="flex items-center justify-between p-4 bg-slate-800/50 border border-slate-700 rounded-2xl">
                     <div className="flex flex-col">
                       <span className="text-sm font-bold text-slate-200">Pose & Attire Sync</span>
-                      <span className="text-[10px] text-slate-500 italic">{imageState.referencePose ? 'Extract from Reference' : 'Match original pose'}</span>
+                      <span className="text-[10px] text-slate-500 italic">{imageState.referencePose ? 'Enabled (Using Reference)' : (poseAttireConsistency ? 'Enabled (Strict Original)' : 'Flexible')}</span>
                     </div>
                     <button
                       onClick={() => setPoseAttireConsistency(!poseAttireConsistency)}
@@ -344,7 +347,7 @@ const App: React.FC = () => {
                   <div className="flex items-center justify-between p-4 bg-slate-800/50 border border-slate-700 rounded-2xl">
                     <div className="flex flex-col">
                       <span className="text-sm font-bold text-slate-200">Ultra High-Res</span>
-                      <span className="text-[10px] text-slate-500 italic">8K UHD Master Rendering</span>
+                      <span className="text-[10px] text-slate-500 italic">8K UHD Rendering</span>
                     </div>
                     <button
                       onClick={() => setHighRes(!highRes)}
@@ -471,19 +474,6 @@ const App: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between p-4 bg-slate-800/50 border border-slate-700 rounded-2xl">
-                  <div className="flex flex-col">
-                    <span className="text-sm font-bold text-slate-200">Auto Save</span>
-                    <span className="text-[10px] text-slate-500 italic">Export results</span>
-                  </div>
-                  <button
-                    onClick={() => setAutoSave(!autoSave)}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${autoSave ? 'bg-blue-600' : 'bg-slate-700'}`}
-                  >
-                    <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${autoSave ? 'translate-x-6' : 'translate-x-1'}`} />
-                  </button>
-                </div>
-
                 <button
                   onClick={handleTransform}
                   disabled={imageState.loading}
@@ -518,7 +508,7 @@ const App: React.FC = () => {
                 {/* Main Input Frame */}
                 <div className="space-y-3">
                   <div className="flex justify-between items-end px-1">
-                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Target Identity</span>
+                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Target Identity (Face Source)</span>
                     <button 
                       onClick={() => fileInputRef.current?.click()}
                       className="flex items-center gap-1.5 px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-full text-[10px] font-bold uppercase tracking-wider transition-all border border-slate-700 shadow-sm group"
@@ -526,7 +516,7 @@ const App: React.FC = () => {
                       <svg className="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                       </svg>
-                      Swap Main
+                      Swap Image 1
                     </button>
                   </div>
                   <div className="aspect-[3/4] bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-xl relative group">
@@ -548,37 +538,40 @@ const App: React.FC = () => {
                 {/* Pose & Attire Reference Box */}
                 <div className="space-y-3">
                   <div className="flex justify-between items-end px-1">
-                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Pose & Attire Reference (Optional)</span>
+                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Pose & Attire (Reference Source)</span>
                     {imageState.referencePose && (
                       <button 
-                        onClick={() => setImageState(prev => ({ ...prev, referencePose: null }))}
+                        onClick={(e) => { e.stopPropagation(); setImageState(prev => ({ ...prev, referencePose: null })); }}
                         className="text-red-400 hover:text-red-300 text-[10px] font-bold uppercase tracking-wider"
                       >
-                        Clear
+                        Clear Pose
                       </button>
                     )}
                   </div>
                   <div 
-                    className={`aspect-[3/4] bg-slate-900/50 rounded-3xl overflow-hidden border-2 border-dashed transition-all duration-300 flex items-center justify-center relative group ${
-                      imageState.referencePose ? 'border-indigo-500/50' : 'border-slate-800 hover:border-slate-700'
+                    className={`aspect-[3/4] bg-slate-900/50 rounded-3xl overflow-hidden border-2 border-dashed transition-all duration-300 flex items-center justify-center relative group cursor-pointer ${
+                      imageState.referencePose ? 'border-indigo-500/50' : 'border-slate-800 hover:border-indigo-500/30'
                     }`}
                     onClick={() => poseInputRef.current?.click()}
                   >
                     {imageState.referencePose ? (
                       <>
                         <img src={imageState.referencePose} alt="Reference Pose" className="w-full h-full object-cover" />
-                        <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
-                          <span className="text-white text-xs font-bold bg-indigo-600 px-4 py-2 rounded-full">Change Reference</span>
+                        <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <span className="text-white text-xs font-bold bg-indigo-600 px-4 py-2 rounded-full shadow-lg">Change Image 2</span>
                         </div>
                       </>
                     ) : (
-                      <div className="text-center p-6 flex flex-col items-center gap-3 cursor-pointer">
-                        <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                          <svg className="w-6 h-6 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="text-center p-6 flex flex-col items-center gap-3">
+                        <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:bg-indigo-600/20 transition-all">
+                          <svg className="w-6 h-6 text-slate-500 group-hover:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                           </svg>
                         </div>
-                        <span className="text-xs font-medium text-slate-600 group-hover:text-slate-400 transition-colors">Add Pose/Attire Asset</span>
+                        <div className="space-y-1">
+                          <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider group-hover:text-slate-200">Import Asset</span>
+                          <span className="block text-[10px] text-slate-600">Body & Clothing Ref</span>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -610,7 +603,7 @@ const App: React.FC = () => {
                             <h4 className="text-white font-black text-xl uppercase tracking-tighter">
                               {batchMode ? 'Executing Multi-Render' : 'Developing Master Frame'}
                             </h4>
-                            <p className="text-blue-400/70 text-sm font-medium animate-pulse transition-all duration-700">
+                            <p className="text-blue-400/70 text-sm font-medium animate-pulse transition-all duration-700 h-5">
                               {LOADING_MESSAGES[loadingStep]}
                             </p>
                           </div>
@@ -655,7 +648,7 @@ const App: React.FC = () => {
                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                                 </svg>
-                                Loop Input
+                                Loop Identity
                               </button>
                             </div>
                           </div>
@@ -684,7 +677,7 @@ const App: React.FC = () => {
 
               <div className="bg-slate-900/40 border border-slate-800/50 rounded-3xl p-6 text-center">
                 <p className="text-xs text-slate-500 max-w-xl mx-auto leading-relaxed italic">
-                  Note: Disabling the <span className="text-blue-400 font-semibold">Camera Angle Preset</span> or <span className="text-blue-400 font-semibold">Lighting Engine</span> will preserve the corresponding aspects of your original photo.
+                  Tip: Upload a <span className="text-indigo-400 font-bold">Pose Reference</span> to swap the identity from Image 1 onto the body of Image 2.
                 </p>
               </div>
             </div>
