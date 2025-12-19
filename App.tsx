@@ -6,91 +6,98 @@ import { ImageState, Category, LightingCategory, AngleDefinition, LightingDefini
 
 const PHOTO_CATEGORIES: Category[] = [
   {
-    title: 'Eye-Level',
+    title: 'Standard Perspectives',
     angles: [
-      { name: 'Standard Eye', description: 'Camera at subject’s eye height', bestUse: 'Natural portraits, corporate' },
-      { name: 'Flattering', description: 'Camera just above eye line', bestUse: 'Fashion portraits' },
-      { name: 'Authority', description: 'Camera just below eye line', bestUse: 'Confidence shots' },
+      { name: 'Eye-Level', description: 'Camera at subject’s eye height', bestUse: 'Natural portraits, corporate' },
+      { name: 'Flattering High', description: 'Camera just above eye line', bestUse: 'Fashion portraits' },
+      { name: 'Powerful Low', description: 'Camera just below eye line', bestUse: 'Confidence shots' },
     ]
   },
   {
-    title: 'Verticality',
+    title: 'Cinematic Heights',
     angles: [
       { name: 'High Angle', description: 'Camera above subject looking down', bestUse: 'Editorial looks' },
       { name: 'Bird’s-Eye', description: 'Camera directly overhead', bestUse: 'Creative flat-lays' },
-      { name: 'Low Angle', description: 'Camera below looking up', bestUse: 'Heroic, dramatic' },
-      { name: 'Worm’s-Eye', description: 'Extreme low upward angle', bestUse: 'Cinematic scale' },
+      { name: 'Heroic Low', description: 'Camera below looking up', bestUse: 'Heroic, dramatic' },
+      { name: 'Extreme Worm’s-Eye', description: 'Extreme low upward angle', bestUse: 'Cinematic scale' },
     ]
   },
   {
-    title: 'Rotational',
+    title: 'Profile & Rotation',
     angles: [
-      { name: 'Front View', description: 'Subject faces camera', bestUse: 'ID, formal' },
-      { name: '¾ View', description: 'Face turned slightly', bestUse: 'Standard portrait' },
-      { name: 'Profile', description: 'Side view', bestUse: 'Editorial profile' },
+      { name: 'Direct Front', description: 'Subject faces camera', bestUse: 'ID, formal' },
+      { name: 'Three-Quarters', description: 'Face turned slightly', bestUse: 'Standard portrait' },
+      { name: 'Editorial Profile', description: 'Side view', bestUse: 'Editorial profile' },
     ]
   },
   {
-    title: 'Framing',
+    title: 'Structural Framing',
     angles: [
-      { name: 'Extreme Close-Up', description: 'Focus on specific features (eyes/lips)', bestUse: 'Intense emotion, detail' },
-      { name: 'Close-Up', description: 'Face fills most of the frame', bestUse: 'Beauty, expressions' },
-      { name: 'Medium Close-Up', description: 'Subject from chest up', bestUse: 'Standard interviews, intimate' },
-      { name: 'Medium Shot', description: 'Subject from waist up', bestUse: 'Lifestyle, interactions' },
-      { name: 'Cowboy Shot', description: 'Subject from mid-thigh/knees up', bestUse: 'Attitude, showing holster' },
-      { name: 'Full Shot', description: 'Subject head to toe', bestUse: 'Fashion, outfit showcase' },
-      { name: 'Extreme Long Shot', description: 'Subject is small in the environment', bestUse: 'Scale, scenery' },
+      { name: 'Face Close-Up', description: 'Focus on eyes and lips', bestUse: 'Intense emotion, detail' },
+      { name: 'Standard Medium', description: 'Subject from chest up', bestUse: 'Intimate portraits' },
+      { name: 'Waist-Up Shot', description: 'Subject from waist up', bestUse: 'Lifestyle, interactions' },
+      { name: 'American Shot', description: 'Subject from knees up', bestUse: 'Attitude, cinematic' },
+      { name: 'Full Body', description: 'Subject head to toe', bestUse: 'Fashion showcase' },
     ]
   },
   {
-    title: 'Experimental',
+    title: 'Creative Hooks',
     angles: [
-      { name: 'Dutch Angle', description: 'Camera tilted sideways', bestUse: 'Drama, tension' },
-      { name: 'Silhouette', description: 'Strong backlight', bestUse: 'Moody artistic' },
-      { name: 'POV', description: 'First-person view', bestUse: 'Action shots' },
+      { name: 'Dutch Tilt', description: 'Camera tilted sideways', bestUse: 'Drama, tension' },
+      { name: 'Atmospheric Silhouette', description: 'Extreme backlight', bestUse: 'Moody artistic' },
+      { name: 'First-Person POV', description: 'Subject perspective', bestUse: 'Action shots' },
     ]
   }
 ];
 
 const LIGHTING_CATEGORIES: LightingCategory[] = [
   {
-    title: 'Camera White Balance',
+    title: 'Chrono-Light (Time of Day)',
     presets: [
-      { name: 'Daylight', description: '5200K – 5600K', effect: 'Neutralizes direct sun warmth' },
-      { name: 'Cloudy', description: '6000K', effect: 'Adds amber warmth to cool overcast light' },
-      { name: 'Shade', description: '7000K – 8000K', effect: 'Compensates for deep blue shadows' },
+      { name: 'Sunrise Glow', description: 'Soft morning light', effect: 'Low-angle warmth, soft shadows' },
+      { name: 'High-Noon Harsh', description: 'Vertical sun exposure', effect: 'Short, sharp shadows, high intensity' },
+      { name: 'Cinematic Golden Hour', description: 'Magic hour sunset', effect: 'Long amber shadows, warm glow' },
+      { name: 'Ethereal Blue Hour', description: 'Twilight ambiance', effect: 'Cool, deep blue tones, low contrast' },
+      { name: 'Moonlit Night', description: 'Natural nocturnal light', effect: 'Deep shadows, pale silver highlights' },
+      { name: 'Midnight Noir', description: 'Minimalist night', effect: 'High contrast, hidden details' },
     ]
   },
   {
-    title: 'Artistic Atmosphere',
+    title: 'Atmospheric Weather',
     presets: [
-      { name: 'Golden Hour', description: 'Sunrise/Sunset soft light', effect: 'Warm, long shadows, gold glow' },
-      { name: 'Blue Hour', description: 'Civil twilight', effect: 'Cool, ethereal, deep blue tones' },
-      { name: 'Hard Light', description: 'Midday high sun', effect: 'Sharp shadows, high contrast' },
-      { name: 'Overcast', description: 'Nature’s softbox', effect: 'Flat, even, shadowless light' },
-      { name: 'Window Light', description: 'Directional soft light', effect: 'Classic portrait illumination' },
-      { name: 'Dappled Light', description: 'Tree leaf filter', effect: 'Speckled light and shadow spots' },
+      { name: 'Foggy Morning', description: 'Dense low-vis mist', effect: 'Muted colors, heavy depth, soft edges' },
+      { name: 'Stormy Overcast', description: 'Dark pre-rain clouds', effect: 'Dramatic greys, moody flat light' },
+      { name: 'Tropical Mist', description: 'Humid, diffused light', effect: 'Saturated greens, glowing highlights' },
+      { name: 'Dust Storm', description: 'Arid desert wind', effect: 'Sepia haze, obscured background' },
+      { name: 'Rain-Slicked Street', description: 'Wet urban environment', effect: 'Reflective surfaces, high specular bloom' },
+    ]
+  },
+  {
+    title: 'Studio & Artificial',
+    presets: [
+      { name: 'Soft Box Diffusion', description: 'Commercial studio', effect: 'Shadowless skin, even lighting' },
+      { name: 'High Contrast Hard', description: 'Spotlight focus', effect: 'Sharp edges, theatrical depth' },
+      { name: 'Neon Cyberpunk', description: 'Vibrant city lights', effect: 'Magenta and cyan rim lighting' },
+      { name: 'Warm Candlelight', description: 'Intimate flame source', effect: 'Deep amber, flickering soft shadows' },
+      { name: 'Ring Light Glow', description: 'Social media look', effect: 'Iconic eye catchlights, flat face light' },
     ]
   }
 ];
 
 const ASPECT_RATIOS: { label: string; value: AspectRatio }[] = [
-  { label: 'Original', value: 'original' },
+  { label: 'Source', value: 'original' },
   { label: 'Square 1:1', value: '1:1' },
   { label: 'Portrait 3:4', value: '3:4' },
-  { label: '4:5', value: '4:5' },
-  { label: 'Classic 4:3', value: '4:3' },
-  { label: 'Story 9:16', value: '9:16' },
+  { label: 'Mobile 9:16', value: '9:16' },
   { label: 'Cinema 16:9', value: '16:9' },
 ];
 
-const LOADING_MESSAGES = [
-  "Analyzing image composition and facial structure...",
-  "Calculating 3D camera coordinates for the new angle...",
-  "Adjusting virtual focal length and lens aperture...",
-  "Synthesizing volumetric lighting and shadows...",
-  "Rendering high-fidelity textures and skin details...",
-  "Finalizing cinematic master and color grading..."
+const LOADING_STEPS = [
+  { title: "Visual Analysis", detail: "Mapping spatial geometry and lighting vectors..." },
+  { title: "Perspective Shift", detail: "Calculating new camera matrix..." },
+  { title: "Identity Protection", detail: "Isolating subject to prevent distortion..." },
+  { title: "Environment Synthesis", detail: "Rendering new atmosphere and shadows..." },
+  { title: "Cinema Mastering", detail: "Applying final 8K texture passes..." }
 ];
 
 const App: React.FC = () => {
@@ -100,13 +107,11 @@ const App: React.FC = () => {
   const [lightingEnabled, setLightingEnabled] = useState<boolean>(true);
   const [selectedAspectRatio, setSelectedAspectRatio] = useState<AspectRatio>('original');
   const [faceConsistency, setFaceConsistency] = useState<boolean>(true);
-  const [poseAttireConsistency, setPoseAttireConsistency] = useState<boolean>(true);
-  const [highRes, setHighRes] = useState<boolean>(false);
-  const [batchMode, setBatchMode] = useState<boolean>(false);
+  const [highRes, setHighRes] = useState<boolean>(true);
+  const [variationCount, setVariationCount] = useState<number>(1);
   const [activePrompt, setActivePrompt] = useState<string>("");
-  const [autoSave, setAutoSave] = useState<boolean>(false);
   const [loadingStep, setLoadingStep] = useState<number>(0);
-  
+
   const [imageState, setImageState] = useState<ImageState>({
     original: null,
     referencePose: null,
@@ -116,27 +121,26 @@ const App: React.FC = () => {
   });
   
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const poseInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     let interval: any;
     if (imageState.loading) {
       setLoadingStep(0);
       interval = setInterval(() => {
-        setLoadingStep((prev) => (prev < LOADING_MESSAGES.length - 1 ? prev + 1 : prev));
-      }, 2500);
+        setLoadingStep((prev) => (prev < LOADING_STEPS.length - 1 ? prev + 1 : prev));
+      }, 2000);
     } else {
       setLoadingStep(0);
     }
     return () => clearInterval(interval);
   }, [imageState.loading]);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>, type: 'original' | 'pose') => {
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      setImageState(prev => ({ ...prev, error: 'Please upload a valid image file.' }));
+      setImageState(prev => ({ ...prev, error: 'Only image files are supported.' }));
       return;
     }
 
@@ -144,7 +148,7 @@ const App: React.FC = () => {
     reader.onload = (event) => {
       setImageState(prev => ({
         ...prev,
-        [type === 'original' ? 'original' : 'referencePose']: event.target?.result as string,
+        original: event.target?.result as string,
         transformed: null,
         loading: false,
         error: null,
@@ -157,7 +161,7 @@ const App: React.FC = () => {
   const downloadImage = (url: string) => {
     const link = document.createElement('a');
     link.href = url;
-    link.download = `visualglam-pro-3-${Date.now()}.png`;
+    link.download = `visualglam-edit-${Date.now()}.png`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -176,21 +180,19 @@ const App: React.FC = () => {
 
   const handleTransform = async () => {
     if (!imageState.original) {
-      setImageState(prev => ({ ...prev, error: "Please upload a Target Identity image first." }));
+      setImageState(prev => ({ ...prev, error: "Please upload a photo first." }));
       return;
     }
 
     setImageState(prev => ({ ...prev, loading: true, error: null, transformed: null }));
 
     try {
-      const angleName = !angleEnabled ? 'Original Perspective' : (selectedAngle === 'Custom' ? 'Custom Perspective' : selectedAngle.name);
-      const angleDesc = !angleEnabled ? 'Maintain exact camera angle and perspective' : (selectedAngle === 'Custom' ? 'Custom composition' : selectedAngle.description);
-      const lightingName = !lightingEnabled ? 'Preserve Original' : (selectedLighting === 'Default' ? 'Natural Light' : selectedLighting.name);
-      const lightingDesc = !lightingEnabled ? 'Keep original lighting and environment' : (selectedLighting === 'Default' ? 'Standard exposure' : selectedLighting.description);
+      const angleName = !angleEnabled ? 'Original' : (selectedAngle === 'Custom' ? 'Custom' : selectedAngle.name);
+      const angleDesc = !angleEnabled ? 'Preserve source angle' : (selectedAngle === 'Custom' ? 'AI Optimized' : selectedAngle.description);
+      const lightingName = !lightingEnabled ? 'Preserve' : (selectedLighting === 'Default' ? 'Studio' : selectedLighting.name);
+      const lightingDesc = !lightingEnabled ? 'Keep original lighting' : (selectedLighting === 'Default' ? 'Standard' : selectedLighting.description);
 
-      const numVariations = batchMode ? 3 : 1;
-      
-      const transformPromises = Array.from({ length: numVariations }).map(() => 
+      const transformPromises = Array.from({ length: variationCount }).map(() => 
         transformImagePerspective(
           imageState.original!, 
           angleName, 
@@ -200,24 +202,17 @@ const App: React.FC = () => {
           activePrompt,
           selectedAspectRatio,
           faceConsistency,
-          highRes,
-          poseAttireConsistency,
-          imageState.referencePose
+          highRes
         )
       );
 
       const results = await Promise.all(transformPromises);
-      
       setImageState(prev => ({ ...prev, transformed: results, loading: false }));
-      
-      if (autoSave && results.length > 0) {
-        results.forEach(url => downloadImage(url));
-      }
     } catch (err: any) {
-      console.error("Transformation sequence error:", err);
+      console.error("Master Sequence Error:", err);
       const msg = err.message === 'QUOTA_EXCEEDED' 
-        ? 'API quota exhausted. Please try again later.' 
-        : (err.message || 'Transformation failed. Try a different combination.');
+        ? 'AI Resource Limit Reached. Please try again soon.' 
+        : (err.message || 'Render failed.');
         
       setImageState(prev => ({ ...prev, loading: false, error: msg }));
     }
@@ -233,7 +228,6 @@ const App: React.FC = () => {
     });
     setActivePrompt("");
     if (fileInputRef.current) fileInputRef.current.value = '';
-    if (poseInputRef.current) poseInputRef.current.value = '';
   };
 
   const isAngleSelected = (angle: AngleDefinition | 'Custom') => {
@@ -252,136 +246,106 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-200">
+    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-200 selection:bg-indigo-500 selection:text-white">
       <Navbar />
 
-      <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
-        <input 
-          type="file" 
-          ref={fileInputRef} 
-          className="hidden" 
-          accept="image/*" 
-          onChange={(e) => handleFileUpload(e, 'original')} 
-        />
-        <input 
-          type="file" 
-          ref={poseInputRef} 
-          className="hidden" 
-          accept="image/*" 
-          onChange={(e) => handleFileUpload(e, 'pose')} 
-        />
+      <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
+        <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleFileUpload} />
 
         {!imageState.original ? (
-          <div className="max-w-2xl mx-auto text-center py-12">
-            <h1 className="text-5xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-200 to-slate-400">
-              Virtual Camera Studio
+          <div className="max-w-2xl mx-auto text-center py-20">
+            <h1 className="text-6xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-br from-white via-indigo-200 to-slate-500 tracking-tight">
+              Virtual Studio Engine
             </h1>
-            <p className="text-slate-400 text-xl mb-12">
-              Re-shoot any photo with professional camera angles, lighting presets, and custom aspect ratios.
+            <p className="text-slate-400 text-xl mb-14 font-medium leading-relaxed">
+              Professional perspective control. Re-shoot your photos from any angle with surgical AI precision.
             </p>
             <div 
-              className="border-2 border-dashed border-slate-800 bg-slate-900/30 rounded-3xl p-16 text-center hover:border-blue-500/50 hover:bg-slate-900/50 transition-all cursor-pointer group shadow-2xl"
+              className="border-2 border-dashed border-slate-800 bg-slate-900/20 rounded-[40px] p-20 text-center hover:border-indigo-500/50 hover:bg-slate-900/40 transition-all cursor-pointer group shadow-3xl relative overflow-hidden"
               onClick={() => fileInputRef.current?.click()}
             >
-              <div className="w-20 h-20 bg-blue-600/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform border border-blue-500/20">
-                <svg className="w-10 h-10 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/5 to-transparent pointer-events-none" />
+              <div className="w-24 h-24 bg-indigo-600/10 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 group-hover:rotate-3 transition-all border border-indigo-500/20 shadow-inner">
+                <svg className="w-12 h-12 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">Upload a Photo</h3>
-              <p className="text-slate-500 mb-8">Works best with portraits, fashion, and lifestyle shots.</p>
-              <button className="px-8 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20">
-                Choose Image
+              <h3 className="text-3xl font-black text-white mb-3">Upload Source Photo</h3>
+              <p className="text-slate-500 mb-10 text-lg">Select a photo to begin your studio re-shoot.</p>
+              <button className="px-12 py-4 bg-indigo-600 text-white rounded-2xl font-black text-lg hover:bg-indigo-700 transition-all shadow-2xl shadow-indigo-600/20 active:scale-95">
+                Start Session
               </button>
             </div>
           </div>
         ) : (
-          <div className="grid lg:grid-cols-12 gap-8 items-start">
-            <div className="lg:col-span-4 space-y-4">
-              <div className="bg-slate-900 rounded-3xl border border-slate-800 shadow-2xl p-6 space-y-6">
+          <div className="grid lg:grid-cols-12 gap-10 items-start">
+            <div className="lg:col-span-4 space-y-6">
+              <div className="bg-slate-900/80 backdrop-blur-xl rounded-[32px] border border-slate-800 shadow-3xl p-8 space-y-8">
                 <div className="flex justify-between items-center">
-                  <h2 className="text-lg font-bold text-white tracking-tight">Studio Configuration</h2>
-                  <button onClick={clearApp} className="text-slate-500 hover:text-red-400 text-xs font-bold transition-colors uppercase tracking-widest">
+                  <h2 className="text-xl font-black text-white tracking-tight uppercase border-l-4 border-indigo-500 pl-4">Engine Config</h2>
+                  <button onClick={clearApp} className="text-slate-500 hover:text-red-400 text-xs font-black transition-colors uppercase tracking-widest px-3 py-1 bg-slate-950 rounded-lg">
                     Reset
                   </button>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Custom Directives (Optional)</label>
-                  <textarea
-                    value={activePrompt}
-                    onChange={(e) => setActivePrompt(e.target.value)}
-                    placeholder="E.g. Change background to Paris, make the outfit look leather..."
-                    className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-xs text-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none min-h-[80px] transition-all resize-none scrollbar-hide"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between p-4 bg-slate-800/50 border border-slate-700 rounded-2xl">
-                    <div className="flex flex-col">
-                      <span className="text-sm font-bold text-slate-200">Face consistency</span>
-                      <span className="text-[10px] text-slate-500 italic">Preserve identities</span>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Identity Lock</label>
+                    <div className="flex items-center justify-between p-4 bg-slate-950 border border-slate-800 rounded-2xl group hover:border-indigo-500/30 transition-all">
+                      <div className="flex flex-col">
+                        <span className="text-sm font-bold text-slate-200">Consistency</span>
+                        <span className="text-[10px] text-slate-500">Subject Sync</span>
+                      </div>
+                      <button onClick={() => setFaceConsistency(!faceConsistency)} className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${faceConsistency ? 'bg-indigo-600 shadow-[0_0_10px_rgba(79,70,229,0.5)]' : 'bg-slate-800'}`}>
+                        <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${faceConsistency ? 'translate-x-6' : 'translate-x-1'}`} />
+                      </button>
                     </div>
-                    <button
-                      onClick={() => setFaceConsistency(!faceConsistency)}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${faceConsistency ? 'bg-blue-600' : 'bg-slate-700'}`}
-                    >
-                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${faceConsistency ? 'translate-x-6' : 'translate-x-1'}`} />
-                    </button>
                   </div>
 
-                  <div className="flex items-center justify-between p-4 bg-slate-800/50 border border-slate-700 rounded-2xl">
-                    <div className="flex flex-col">
-                      <span className="text-sm font-bold text-slate-200">Pose & Attire Sync</span>
-                      <span className="text-[10px] text-slate-500 italic">{imageState.referencePose ? 'Enabled (Using Reference)' : (poseAttireConsistency ? 'Enabled (Strict Original)' : 'Flexible')}</span>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Render Level</label>
+                    <div className="flex items-center justify-between p-4 bg-slate-950 border border-slate-800 rounded-2xl group hover:border-indigo-500/30 transition-all">
+                      <div className="flex flex-col">
+                        <span className="text-sm font-bold text-slate-200">8K Cinema</span>
+                        <span className="text-[10px] text-slate-500">Enhanced Detail</span>
+                      </div>
+                      <button onClick={() => setHighRes(!highRes)} className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${highRes ? 'bg-indigo-600 shadow-[0_0_10px_rgba(79,70,229,0.5)]' : 'bg-slate-800'}`}>
+                        <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${highRes ? 'translate-x-6' : 'translate-x-1'}`} />
+                      </button>
                     </div>
-                    <button
-                      onClick={() => setPoseAttireConsistency(!poseAttireConsistency)}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${poseAttireConsistency ? 'bg-blue-600' : 'bg-slate-700'}`}
-                    >
-                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${poseAttireConsistency ? 'translate-x-6' : 'translate-x-1'}`} />
-                    </button>
                   </div>
 
-                  <div className="flex items-center justify-between p-4 bg-slate-800/50 border border-slate-700 rounded-2xl">
-                    <div className="flex flex-col">
-                      <span className="text-sm font-bold text-slate-200">Ultra High-Res</span>
-                      <span className="text-[10px] text-slate-500 italic">8K UHD Rendering</span>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Variations</label>
+                    <div className="p-4 bg-slate-950 border border-slate-800 rounded-2xl group hover:border-indigo-500/30 transition-all flex items-center justify-between">
+                      <div className="flex flex-col">
+                        <span className="text-sm font-bold text-slate-200">Output Count</span>
+                        <span className="text-[10px] text-slate-500">Versions to render</span>
+                      </div>
+                      <select 
+                        value={variationCount}
+                        onChange={(e) => setVariationCount(parseInt(e.target.value))}
+                        className="bg-slate-900 text-white text-xs font-bold px-3 py-1 rounded-lg border border-slate-700 outline-none focus:ring-1 focus:ring-indigo-500"
+                      >
+                        {[1, 2, 3, 4].map(n => (
+                          <option key={n} value={n}>{n} {n === 1 ? 'Variation' : 'Variations'}</option>
+                        ))}
+                      </select>
                     </div>
-                    <button
-                      onClick={() => setHighRes(!highRes)}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${highRes ? 'bg-blue-600' : 'bg-slate-700'}`}
-                    >
-                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${highRes ? 'translate-x-6' : 'translate-x-1'}`} />
-                    </button>
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 bg-slate-800/50 border border-slate-700 rounded-2xl">
-                    <div className="flex flex-col">
-                      <span className="text-sm font-bold text-slate-200">Batch Mode</span>
-                      <span className="text-[10px] text-slate-500 italic">3 Variations</span>
-                    </div>
-                    <button
-                      onClick={() => setBatchMode(!batchMode)}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${batchMode ? 'bg-blue-600' : 'bg-slate-700'}`}
-                    >
-                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${batchMode ? 'translate-x-6' : 'translate-x-1'}`} />
-                    </button>
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Aspect Ratio</label>
-                  <div className="flex flex-wrap gap-2">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Aspect Ratio</label>
+                  <div className="grid grid-cols-3 gap-2">
                     {ASPECT_RATIOS.map((ratio) => (
                       <button
                         key={ratio.value}
                         onClick={() => setSelectedAspectRatio(ratio.value)}
-                        className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all border ${
+                        className={`px-3 py-2 rounded-xl text-[10px] font-black transition-all border uppercase tracking-wider ${
                           selectedAspectRatio === ratio.value
-                          ? 'bg-blue-600 border-blue-400 text-white shadow-lg shadow-blue-600/20'
-                          : 'bg-slate-800 border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-200'
+                          ? 'bg-indigo-600 border-indigo-400 text-white shadow-lg'
+                          : 'bg-slate-950 border-slate-800 text-slate-500 hover:text-slate-200 hover:border-slate-600'
                         }`}
                       >
                         {ratio.label}
@@ -391,36 +355,20 @@ const App: React.FC = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <div className="flex justify-between items-center mb-1">
-                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Camera Angle Preset</label>
-                    <div className="flex items-center gap-2">
-                      <span className={`text-[9px] font-bold uppercase ${angleEnabled ? 'text-blue-400' : 'text-slate-600'}`}>
-                        {angleEnabled ? 'Active' : 'Bypassed'}
-                      </span>
-                      <button
-                        onClick={() => setAngleEnabled(!angleEnabled)}
-                        className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none ${angleEnabled ? 'bg-blue-600' : 'bg-slate-800'}`}
-                      >
-                        <span className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${angleEnabled ? 'translate-x-5' : 'translate-x-1'}`} />
-                      </button>
-                    </div>
-                  </div>
-                  
-                  <div className={`space-y-5 max-h-[200px] overflow-y-auto pr-2 custom-scrollbar transition-all duration-300 ${!angleEnabled ? 'opacity-30 grayscale pointer-events-none' : ''}`}>
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Camera Angle</label>
+                  <div className="space-y-6 max-h-[300px] overflow-y-auto pr-3 custom-scrollbar">
                     {PHOTO_CATEGORIES.map((cat) => (
                       <div key={cat.title} className="space-y-2">
-                        <h4 className="text-[9px] font-bold text-blue-400 uppercase tracking-[0.15em] border-b border-slate-800 pb-1">
-                          {cat.title}
-                        </h4>
+                        <h4 className="text-[9px] font-black text-indigo-400 uppercase tracking-[0.25em] mb-2">{cat.title}</h4>
                         <div className="grid grid-cols-2 gap-2">
                           {cat.angles.map((angle) => (
                             <button
                               key={angle.name}
                               onClick={() => setSelectedAngle(angle)}
-                              className={`px-3 py-2 text-left rounded-xl text-[11px] font-medium transition-all border ${
+                              className={`px-3 py-2 text-left rounded-xl text-[10px] font-bold transition-all border leading-tight ${
                                 isAngleSelected(angle) 
-                                ? 'bg-blue-600 border-blue-400 text-white shadow-lg shadow-blue-600/20' 
-                                : 'bg-slate-800 border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-200'
+                                ? 'bg-indigo-600 border-indigo-400 text-white shadow-md' 
+                                : 'bg-slate-950 border-slate-800 text-slate-400 hover:bg-slate-800 hover:text-slate-200'
                               }`}
                             >
                               {angle.name}
@@ -433,36 +381,20 @@ const App: React.FC = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <div className="flex justify-between items-center mb-1">
-                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Atmosphere & Lighting</label>
-                    <div className="flex items-center gap-2">
-                      <span className={`text-[9px] font-bold uppercase ${lightingEnabled ? 'text-blue-400' : 'text-slate-600'}`}>
-                        {lightingEnabled ? 'Active' : 'Bypassed'}
-                      </span>
-                      <button
-                        onClick={() => setLightingEnabled(!lightingEnabled)}
-                        className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none ${lightingEnabled ? 'bg-blue-600' : 'bg-slate-800'}`}
-                      >
-                        <span className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${lightingEnabled ? 'translate-x-5' : 'translate-x-1'}`} />
-                      </button>
-                    </div>
-                  </div>
-                  
-                  <div className={`space-y-5 max-h-[180px] overflow-y-auto pr-2 custom-scrollbar transition-all duration-300 ${!lightingEnabled ? 'opacity-30 grayscale pointer-events-none' : ''}`}>
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Atmosphere & Lighting</label>
+                  <div className="space-y-6 max-h-[300px] overflow-y-auto pr-3 custom-scrollbar">
                     {LIGHTING_CATEGORIES.map((cat) => (
                       <div key={cat.title} className="space-y-2">
-                        <h4 className="text-[9px] font-bold text-blue-400 uppercase tracking-[0.15em] border-b border-slate-800 pb-1">
-                          {cat.title}
-                        </h4>
+                        <h4 className="text-[9px] font-black text-indigo-400 uppercase tracking-[0.25em] mb-2">{cat.title}</h4>
                         <div className="grid grid-cols-2 gap-2">
                           {cat.presets.map((light) => (
                             <button
                               key={light.name}
                               onClick={() => setSelectedLighting(light)}
-                              className={`px-3 py-2 text-left rounded-xl text-[11px] font-medium transition-all border ${
+                              className={`px-3 py-2 text-left rounded-xl text-[10px] font-bold transition-all border leading-tight ${
                                 isLightingSelected(light) 
-                                ? 'bg-blue-600 border-blue-400 text-white shadow-lg shadow-blue-600/20' 
-                                : 'bg-slate-800 border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-200'
+                                ? 'bg-indigo-600 border-indigo-400 text-white shadow-md' 
+                                : 'bg-slate-950 border-slate-800 text-slate-400 hover:bg-slate-800 hover:text-slate-200'
                               }`}
                             >
                               {light.name}
@@ -474,211 +406,131 @@ const App: React.FC = () => {
                   </div>
                 </div>
 
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Custom Instructions</label>
+                  <textarea 
+                    value={activePrompt}
+                    onChange={(e) => setActivePrompt(e.target.value)}
+                    placeholder="E.g. Change background to a beach, add a red tie..."
+                    className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-xs text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none min-h-[100px] transition-all resize-none scrollbar-hide"
+                  />
+                </div>
+
                 <button
                   onClick={handleTransform}
                   disabled={imageState.loading}
-                  className="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl font-black text-lg shadow-2xl shadow-blue-600/30 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                  className="w-full py-5 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-[24px] font-black text-xl shadow-2xl shadow-indigo-600/30 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed flex items-center justify-center gap-4"
                 >
                   {imageState.loading ? (
                     <>
-                      <svg className="animate-spin h-6 w-6" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                      </svg>
-                      {batchMode ? 'Executing Multi-Render...' : 'Generating...'}
+                      <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                      Rendering {variationCount > 1 ? `Variations` : ''}...
                     </>
                   ) : (
-                    batchMode ? 'GENERATE 3 VARIATIONS' : 'RE-SHOOT PHOTO'
+                    "DEVELOP MASTER"
                   )}
                 </button>
 
                 {imageState.error && (
-                  <div className="p-3 bg-red-400/10 border border-red-500/20 rounded-xl flex items-center gap-2">
-                    <svg className="w-4 h-4 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center gap-3">
+                    <svg className="w-5 h-5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
-                    <p className="text-red-400 text-[11px] font-medium leading-tight">{imageState.error}</p>
+                    <p className="text-red-400 text-xs font-bold leading-relaxed">{imageState.error}</p>
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="lg:col-span-8 space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                {/* Main Input Frame */}
-                <div className="space-y-3">
-                  <div className="flex justify-between items-end px-1">
-                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Target Identity (Face Source)</span>
-                    <button 
-                      onClick={() => fileInputRef.current?.click()}
-                      className="flex items-center gap-1.5 px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-full text-[10px] font-bold uppercase tracking-wider transition-all border border-slate-700 shadow-sm group"
-                    >
-                      <svg className="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                      </svg>
-                      Swap Image 1
-                    </button>
+            <div className="lg:col-span-8 space-y-10">
+              <div className="space-y-4">
+                <div className="flex justify-between items-end px-2">
+                  <div className="flex flex-col">
+                    <span className="text-[11px] font-black text-slate-500 uppercase tracking-[0.2em]">Source File</span>
+                    <span className="text-lg font-black text-white">Input Photo</span>
                   </div>
-                  <div className="aspect-[3/4] bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-xl relative group">
-                    <img src={imageState.original!} alt="Original" className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent pointer-events-none" />
-                    <div 
-                      className="absolute inset-0 bg-slate-900/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center cursor-pointer"
-                      onClick={() => fileInputRef.current?.click()}
-                    >
-                      <div className="bg-white/20 p-4 rounded-full border border-white/40 group-hover:scale-110 transition-transform">
-                        <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
+                  <button onClick={() => fileInputRef.current?.click()} className="px-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-800 transition-all">
+                    Replace
+                  </button>
                 </div>
-
-                {/* Pose & Attire Reference Box */}
-                <div className="space-y-3">
-                  <div className="flex justify-between items-end px-1">
-                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Pose & Attire (Reference Source)</span>
-                    {imageState.referencePose && (
-                      <button 
-                        onClick={(e) => { e.stopPropagation(); setImageState(prev => ({ ...prev, referencePose: null })); }}
-                        className="text-red-400 hover:text-red-300 text-[10px] font-bold uppercase tracking-wider"
-                      >
-                        Clear Pose
-                      </button>
-                    )}
-                  </div>
-                  <div 
-                    className={`aspect-[3/4] bg-slate-900/50 rounded-3xl overflow-hidden border-2 border-dashed transition-all duration-300 flex items-center justify-center relative group cursor-pointer ${
-                      imageState.referencePose ? 'border-indigo-500/50' : 'border-slate-800 hover:border-indigo-500/30'
-                    }`}
-                    onClick={() => poseInputRef.current?.click()}
-                  >
-                    {imageState.referencePose ? (
-                      <>
-                        <img src={imageState.referencePose} alt="Reference Pose" className="w-full h-full object-cover" />
-                        <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                          <span className="text-white text-xs font-bold bg-indigo-600 px-4 py-2 rounded-full shadow-lg">Change Image 2</span>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="text-center p-6 flex flex-col items-center gap-3">
-                        <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:bg-indigo-600/20 transition-all">
-                          <svg className="w-6 h-6 text-slate-500 group-hover:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                          </svg>
-                        </div>
-                        <div className="space-y-1">
-                          <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider group-hover:text-slate-200">Import Asset</span>
-                          <span className="block text-[10px] text-slate-600">Body & Clothing Ref</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                <div className="aspect-[3/4] bg-slate-900 rounded-[32px] overflow-hidden border-2 border-indigo-500/40 shadow-2xl group relative ring-8 ring-indigo-500/5 max-w-lg mx-auto md:mx-0">
+                  <img src={imageState.original!} alt="Source" className="w-full h-full object-cover" />
                 </div>
               </div>
 
-              <div className="space-y-3 pt-4">
-                <div className="flex justify-between items-end px-1">
-                  <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest">
-                    {imageState.loading ? 'Virtual Render Active' : 'AI Rendered Master'}
-                  </span>
+              <div className="space-y-6">
+                <div className="flex justify-between items-center px-2">
+                  <h3 className="text-[11px] font-black text-indigo-400 uppercase tracking-[0.3em]">Master Render Pipeline</h3>
                 </div>
                 
-                <div className="grid grid-cols-1 gap-8">
+                <div className="relative">
                   {imageState.loading ? (
                     <div 
-                      className="bg-slate-950 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl relative flex items-center justify-center min-h-[500px]"
+                      className="bg-slate-950 rounded-[40px] border border-slate-800 shadow-3xl relative flex items-center justify-center min-h-[500px] overflow-hidden"
                       style={{ aspectRatio: getContainerAspectRatio() }}
                     >
-                      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-slate-950/80 backdrop-blur-sm px-6">
-                        <div className="relative mb-12">
-                          <div className="w-24 h-24 border-2 border-blue-500/10 rounded-full animate-ping absolute inset-0"></div>
-                          <div className="w-24 h-24 border-2 border-blue-500/20 rounded-full animate-pulse absolute inset-0"></div>
-                          <div className="w-24 h-24 border-t-2 border-r-2 border-blue-500 rounded-full animate-spin"></div>
-                        </div>
-
-                        <div className="text-center w-full max-w-md space-y-6">
-                          <div className="space-y-2">
-                            <h4 className="text-white font-black text-xl uppercase tracking-tighter">
-                              {batchMode ? 'Executing Multi-Render' : 'Developing Master Frame'}
-                            </h4>
-                            <p className="text-blue-400/70 text-sm font-medium animate-pulse transition-all duration-700 h-5">
-                              {LOADING_MESSAGES[loadingStep]}
-                            </p>
+                      <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-2xl z-20 flex flex-col items-center justify-center p-12">
+                        <div className="w-full max-w-md space-y-8">
+                          <div className="text-center space-y-4">
+                            <div className="relative inline-block mb-4">
+                              <div className="w-24 h-24 border-2 border-indigo-500/10 rounded-full animate-ping absolute inset-0" />
+                              <div className="w-24 h-24 border-t-2 border-indigo-500 rounded-full animate-spin" />
+                            </div>
+                            <h4 className="text-white text-3xl font-black tracking-tighter uppercase italic">Developing Output</h4>
                           </div>
 
-                          <div className="flex justify-between gap-1 w-full px-8">
-                            {LOADING_MESSAGES.map((_, i) => (
-                              <div 
-                                key={i} 
-                                className={`h-1.5 flex-grow rounded-full transition-all duration-700 ${
-                                  i <= loadingStep ? 'bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.6)]' : 'bg-slate-800'
-                                }`} 
-                              />
-                            ))}
+                          <div className="bg-slate-900/50 rounded-3xl border border-slate-800 overflow-hidden shadow-inner">
+                            <div className="p-4 border-b border-slate-800 bg-slate-950/50 flex justify-between items-center text-[10px] font-black text-indigo-400 uppercase tracking-widest">
+                                <span>Diagnostics</span>
+                                <span className="text-slate-400">{Math.round(((loadingStep + 1) / LOADING_STEPS.length) * 100)}%</span>
+                            </div>
+                            <div className="p-6 space-y-5">
+                              {LOADING_STEPS.map((step, i) => (
+                                <div key={i} className={`flex gap-4 transition-all duration-700 ${i > loadingStep ? 'opacity-20' : 'opacity-100'}`}>
+                                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                                    i < loadingStep ? 'bg-indigo-600 border-indigo-600' : 'border-slate-800'
+                                  }`}>
+                                    {i < loadingStep && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={4}><path d="M5 13l4 4L19 7" /></svg>}
+                                  </div>
+                                  <div className="flex flex-col gap-0.5">
+                                    <span className={`text-[11px] font-black uppercase tracking-tight ${i === loadingStep ? 'text-white' : 'text-slate-500'}`}>{step.title}</span>
+                                    {i === loadingStep && <span className="text-[10px] text-indigo-400 font-bold italic">{step.detail}</span>}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   ) : imageState.transformed ? (
-                    <div className={`grid gap-6 ${imageState.transformed.length > 1 ? 'md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
+                    <div className={`grid gap-8 ${imageState.transformed.length > 1 ? 'md:grid-cols-2' : 'grid-cols-1'}`}>
                       {imageState.transformed.map((url, idx) => (
-                        <div key={idx} className="space-y-3 group/item">
-                          <div 
-                            className="bg-slate-950 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl relative flex items-center justify-center transition-all duration-500 group-hover/item:border-blue-500/30"
-                            style={{ aspectRatio: getContainerAspectRatio() }}
-                          >
-                            <img src={url} alt={`Variation ${idx + 1}`} className="w-full h-full object-contain animate-in fade-in zoom-in duration-700" />
-                            
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover/item:opacity-100 transition-all duration-300 flex items-end justify-center pb-6 gap-3">
-                              <button 
-                                onClick={() => downloadImage(url)}
-                                className="p-3 bg-white text-slate-950 rounded-xl hover:scale-110 active:scale-90 transition-all shadow-2xl font-bold flex items-center gap-2 text-xs"
-                              >
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                </svg>
-                                Export
-                              </button>
-                              <button 
-                                onClick={() => useAsReference(url)}
-                                className="p-3 bg-blue-600 text-white rounded-xl hover:scale-110 active:scale-90 transition-all shadow-2xl font-bold flex items-center gap-2 text-xs"
-                              >
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                                </svg>
-                                Loop Identity
-                              </button>
+                        <div key={idx} className="group/item space-y-4">
+                          <div className="bg-slate-950 rounded-[40px] overflow-hidden border border-slate-800 shadow-3xl relative flex items-center justify-center ring-1 ring-white/5 group-hover/item:ring-indigo-500/50 transition-all duration-700" style={{ aspectRatio: getContainerAspectRatio() }}>
+                            <img src={url} alt={`Master ${idx + 1}`} className="w-full h-full object-contain animate-in" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent opacity-0 group-hover/item:opacity-100 transition-all duration-500 flex items-end justify-center pb-10 gap-4">
+                              <button onClick={() => downloadImage(url)} className="px-8 py-3 bg-white text-slate-950 rounded-2xl hover:scale-105 active:scale-90 transition-all font-black text-xs uppercase tracking-[0.2em] shadow-3xl">Export Render</button>
+                              <button onClick={() => useAsReference(url)} className="px-8 py-3 bg-indigo-600 text-white rounded-2xl hover:scale-105 active:scale-90 transition-all font-black text-xs uppercase tracking-[0.2em] shadow-3xl">Iterate</button>
                             </div>
                           </div>
-                          <div className="text-center">
-                            <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">
-                              Variation #{idx + 1}
-                            </span>
-                          </div>
+                          {imageState.transformed.length > 1 && (
+                            <div className="text-center">
+                              <span className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Version {idx + 1}</span>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>
                   ) : (
-                    <div className="bg-slate-950 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl relative flex items-center justify-center min-h-[400px]">
-                      <div className="text-center p-12 max-w-[280px]">
-                        <div className="w-16 h-16 bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-6 opacity-30">
-                          <svg className="w-8 h-8 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                        <p className="text-slate-600 font-bold leading-relaxed italic">Initiate transformation to generate cinematic results.</p>
+                    <div className="bg-slate-900/20 rounded-[40px] border border-slate-800 shadow-inner flex items-center justify-center min-h-[400px] border-dashed">
+                      <div className="text-center p-16 max-w-sm space-y-4">
+                        <h5 className="text-white text-lg font-black uppercase tracking-widest italic">Engine Idle</h5>
+                        <p className="text-slate-500 font-medium leading-relaxed italic text-sm">Select perspective and lighting parameters then press "Develop Master".</p>
                       </div>
                     </div>
                   )}
                 </div>
-              </div>
-
-              <div className="bg-slate-900/40 border border-slate-800/50 rounded-3xl p-6 text-center">
-                <p className="text-xs text-slate-500 max-w-xl mx-auto leading-relaxed italic">
-                  Tip: Upload a <span className="text-indigo-400 font-bold">Pose Reference</span> to swap the identity from Image 1 onto the body of Image 2.
-                </p>
               </div>
             </div>
           </div>
@@ -688,15 +540,15 @@ const App: React.FC = () => {
       <Footer />
       
       <style>{`
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #334155; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #312e81; }
         
-        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-        .animate-in { animation: fade-in 0.3s ease-out; }
+        @keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-in { animation: fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
     </div>
   );

@@ -2,9 +2,21 @@
 import { GoogleGenAI } from "@google/genai";
 import { AspectRatio } from "../types";
 
-// Using the recommended flash image model for perspective transformation and editing.
+// Using the recommended flash image model for high-speed perspective transformation.
 const MODEL_NAME = 'gemini-2.5-flash-image';
 
+/**
+ * Transforms an image's perspective and lighting.
+ * @param base64Image - The source image to be edited
+ * @param angleName - Chosen camera angle name
+ * @param lightingName - Chosen lighting preset name
+ * @param angleDescription - Technical description of the angle
+ * @param lightingDescription - Technical description of the lighting effect
+ * @param customPrompt - Optional user-defined creative directives
+ * @param aspectRatio - Target output dimensions
+ * @param faceConsistency - Boolean to enforce identity preservation
+ * @param highRes - Boolean to trigger high-quality rendering logic
+ */
 export const transformImagePerspective = async (
   base64Image: string, 
   angleName: string, 
@@ -14,64 +26,47 @@ export const transformImagePerspective = async (
   customPrompt?: string,
   aspectRatio: AspectRatio = "1:1",
   faceConsistency: boolean = false,
-  highRes: boolean = false,
-  poseAttireConsistency: boolean = true,
-  referencePoseImage?: string | null
+  highRes: boolean = false
 ): Promise<string> => {
-  // Always create a new instance right before the call to ensure the latest API key is used.
+  // Initialize AI right before the call to ensure the latest environment configuration is utilized.
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const mainImageData = base64Image.split(',')[1] || base64Image;
   const mainMimeType = base64Image.split(';')[0].split(':')[1] || 'image/png';
 
-  // Supported values for gemini-2.5-flash-image: "1:1", "3:4", "4:3", "9:16", "16:9"
+  // Aspect ratio normalization for the Gemini model's specific supported values.
   let configAspectRatio: "1:1" | "3:4" | "4:3" | "9:16" | "16:9" = "1:1";
   if (["1:1", "3:4", "4:3", "9:16", "16:9"].includes(aspectRatio)) {
     configAspectRatio = aspectRatio as any;
   } else if (aspectRatio === "4:5") {
-    configAspectRatio = "3:4"; // Closest approximation
+    configAspectRatio = "3:4"; 
   }
 
   const ratioInstruction = aspectRatio === "original" 
-    ? "Maintain the original aspect ratio and framing of the input image."
-    : `Adjust the composition to fit a ${aspectRatio} aspect ratio perfectly.`;
+    ? "Maintain the original framing and pixel-density of the input."
+    : `Output must strictly adhere to a ${aspectRatio} aspect ratio.`;
 
-  const faceConsistencyInstruction = faceConsistency 
-    ? "IDENTITY SOURCE (IMAGE 1): The face, facial features, and core character identity must be taken strictly from the FIRST image. Do not alter the subject's unique look."
-    : "Maintain the subject's general identity from the FIRST image.";
+  const perspectiveInstruction = `
+    ### RENDERING MANDATE: PERSPECTIVE & LIGHTING EDIT
+    - **Target Angle**: "${angleName}" - ${angleDescription}
+    - **Target Lighting**: "${lightingName}" - ${lightingDescription}
+    - **Identity preservation**: ${faceConsistency ? "You must strictly preserve the subject's identity and facial features exactly as they appear in the source image." : "Maintain the subject's primary characteristics."}
+    ${customPrompt ? `- **Additional Directives**: "${customPrompt}"` : ""}
+  `;
 
-  let poseAttireInstruction = "";
-  if (referencePoseImage) {
-    poseAttireInstruction = `
-      POSE & ATTIRE SOURCE (IMAGE 2): 
-      - The SECOND image is the strict reference for body posture, pose, and all clothing elements.
-      - ACTION: Take the face from IMAGE 1 and place it onto the body and attire of IMAGE 2.
-      - Do not keep the clothing from IMAGE 1; use ONLY the clothing and pose from IMAGE 2.
-    `;
-  } else {
-    poseAttireInstruction = poseAttireConsistency
-      ? "POSE & ATTIRE SYNC: Maintain the exact pose and clothing from the input photo while adjusting the camera angle."
-      : "The model is allowed to slightly adjust the pose to suit the new camera perspective.";
-  }
+  const qualityInstruction = highRes
+    ? "RENDER MODE: Professional 8K Cinema Engine. Ensure volumetric lighting and photorealistic textures."
+    : "RENDER MODE: High-fidelity professional digital photography.";
 
-  const highResInstruction = highRes
-    ? "ULTRA ENHANCEMENT: Render with professional cinema-grade detail. Sharpen textures, enhance lighting depth, and ensure a crisp 8K-style photorealistic finish."
-    : "";
+  const prompt = `You are a master-level AI Cinematographer. Your objective is to re-render the provided image from a new camera perspective and with a specific lighting atmosphere.
 
-  const prompt = `You are an expert digital cinematographer performing a specialized identity and pose blend.
+${perspectiveInstruction}
 
-STUDIO SETTINGS:
-- Target Camera Angle: "${angleName}" - ${angleDescription}
-- Environment Lighting: "${lightingName}" - ${lightingDescription}
-${customPrompt ? `- Creative Directives: "${customPrompt}"` : ''}
+${qualityInstruction}
 
-TECHNICAL REQUIREMENTS:
-- ${ratioInstruction}
-- ${faceConsistencyInstruction}
-- ${poseAttireInstruction}
-- ${highResInstruction}
-- Blend the identity and the reference pose/attire into a single, cohesive, hyper-realistic masterpiece.
-- Return the resulting composite image.`;
+${ratioInstruction}
+
+Final output: A single, clean, high-resolution photograph. No text overlays, no watermarks, no multi-image grids.`;
 
   const parts: any[] = [
     {
@@ -79,21 +74,9 @@ TECHNICAL REQUIREMENTS:
         data: mainImageData,
         mimeType: mainMimeType,
       },
-    }
+    },
+    { text: prompt }
   ];
-
-  if (referencePoseImage) {
-    const poseData = referencePoseImage.split(',')[1] || referencePoseImage;
-    const poseMime = referencePoseImage.split(';')[0].split(':')[1] || 'image/png';
-    parts.push({
-      inlineData: {
-        data: poseData,
-        mimeType: poseMime,
-      },
-    });
-  }
-
-  parts.push({ text: prompt });
 
   try {
     const response = await ai.models.generateContent({
@@ -118,18 +101,16 @@ TECHNICAL REQUIREMENTS:
     }
 
     if (!transformedUrl) {
-      throw new Error("Render failed: The model did not return image data.");
+      throw new Error("Render System Failure: The engine returned no image data.");
     }
 
     return transformedUrl;
   } catch (error: any) {
     console.error("Gemini API Error:", error);
-    
     const errorMessage = error.message || "";
     if (errorMessage.includes("429") || errorMessage.includes("quota") || errorMessage.includes("RESOURCE_EXHAUSTED")) {
       throw new Error("QUOTA_EXCEEDED");
     }
-
-    throw new Error(error.message || "An unexpected error occurred during the render.");
+    throw new Error(error.message || "A rendering engine error occurred.");
   }
 };
